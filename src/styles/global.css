@@ -84,3 +84,9 @@ a {
   border-radius: 4px;
   background: var(--green);
 }
+
+span.current-experience {
+  position: absolute;
+  top: 12px;
+  transform: translateX(-50%);
+}
