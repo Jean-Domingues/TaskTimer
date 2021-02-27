@@ -80,4 +80,15 @@
   background-color: var(--white);
   color: var(--title);
   cursor: not-allowed;
+
+  position: relative;
+}
+
+.counterButton:disabled div {
+  position: absolute;
+  bottom: 0;
+
+  width: 100%;
+  height: 4px;
+  background-color: var(--green);
 }
