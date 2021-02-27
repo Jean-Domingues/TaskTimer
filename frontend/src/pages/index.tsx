@@ -13,7 +13,7 @@ function Home() {
         <div>
           <Profile />
         </div>
-        <div style={{border: '1px solid grey'}}>
+        <div>
 
         </div>
       </section>
