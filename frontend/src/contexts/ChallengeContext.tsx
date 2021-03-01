@@ -25,8 +25,9 @@ export const ChallengesContext = createContext({} as ChallengesContextData);
 
 export function ChallengesProvider({ children }: ChallengesProviderProps) {
   const [level, setLevel] = useState(1);
-  const [currentXp, setCurrentXp] = useState();
+  const [currentXp, setCurrentXp] = useState(0);
   const [challengesCompleted, setChallengesCompleted] = useState(0);
+  
   const [activeChallenge, setActiveChallenge] = useState(null);
 
   const xpToNextLevel = Math.pow((level + 1) * 4, 2)
