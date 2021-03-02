@@ -4,9 +4,11 @@ import { ExperienceBar } from '../components/ExperienceBar';
 import { Profile } from '../components/Profile';
 import { ChallengeBox } from '../components/ChallengeBox';
 
-import Head from 'next/head'
+import { CountdownProvider } from '../contexts/CountdownContext';
 
-import styles from '../styles/pages/Home.module.css'
+import Head from 'next/head';
+
+import styles from '../styles/pages/Home.module.css';
 
 function Home() {
   return (
@@ -14,19 +16,21 @@ function Home() {
       <Head>
         <title>Inicio | move.it</title>
       </Head>
-    
+
       <ExperienceBar />
 
-      <section>
-        <div>
-          <Profile />
-          <CompletedChallenges />
-          <Countdown />
-        </div>
-        <div>
-          <ChallengeBox />
-        </div>
-      </section>
+      <CountdownProvider>
+        <section>
+          <div>
+            <Profile />
+            <CompletedChallenges />
+            <Countdown />
+          </div>
+          <div>
+            <ChallengeBox />
+          </div>
+        </section>
+      </CountdownProvider>
     </div>
   );
 }
