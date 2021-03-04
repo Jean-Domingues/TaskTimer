@@ -20,7 +20,11 @@ interface HomeProps {
 
 function Home(props : HomeProps) {
   return (
-    <ChallengesProvider>
+    <ChallengesProvider 
+    level={props.level}
+    challengesCompleted={props.challengesCompleted}
+    currentXp={props.currentXp}
+    >
       <div className={styles.container}>
         <Head>
           <title>Inicio | move.it</title>
@@ -28,11 +32,7 @@ function Home(props : HomeProps) {
 
         <ExperienceBar />
 
-        <CountdownProvider
-          level={props.level}
-          challengesCompleted={props.challengesCompleted}
-          currentXp={props.currentXp}
-        >
+        <CountdownProvider>
           <section>
             <div>
               <Profile />
