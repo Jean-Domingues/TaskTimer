@@ -1,3 +1,6 @@
+import Head from 'next/head';
+import { GetServerSideProps } from 'next';
+
 import { CompletedChallenges } from '../components/CompletedChallenges';
 import { Countdown } from '../components/Countdown';
 import { ExperienceBar } from '../components/ExperienceBar';
@@ -6,45 +9,56 @@ import { ChallengeBox } from '../components/ChallengeBox';
 
 import { CountdownProvider } from '../contexts/CountdownContext';
 
-import Head from 'next/head';
-
 import styles from '../styles/pages/Home.module.css';
+import { ChallengesProvider } from '../contexts/ChallengeContext';
 
-function Home(props) {
+interface HomeProps {
+  level: number;
+  currentXp: number;
+  challengesCompleted: number;
+}
+
+function Home(props : HomeProps) {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Inicio | move.it</title>
-      </Head>
+    <ChallengesProvider>
+      <div className={styles.container}>
+        <Head>
+          <title>Inicio | move.it</title>
+        </Head>
 
-      <ExperienceBar />
+        <ExperienceBar />
 
-      <CountdownProvider>
-        <section>
-          <div>
-            <Profile />
-            <CompletedChallenges />
-            <Countdown />
-          </div>
-          <div>
-            <ChallengeBox />
-          </div>
-        </section>
-      </CountdownProvider>
-    </div>
+        <CountdownProvider
+          level={props.level}
+          challengesCompleted={props.challengesCompleted}
+          currentXp={props.currentXp}
+        >
+          <section>
+            <div>
+              <Profile />
+              <CompletedChallenges />
+              <Countdown />
+            </div>
+            <div>
+              <ChallengeBox />
+            </div>
+          </section>
+        </CountdownProvider>
+      </div>
+    </ChallengesProvider>
   );
 }
 
 export default Home;
 
-export const getServerSideProps = async () => {
-  const user = {
-    level: 2,
-    challengesCompleted: 3,
-    currentXp: 89
-  }
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { level, challengesCompleted, currentXp } = ctx.req.cookies;
 
   return {
-    props: user
-  }
-}
+    props: { 
+      level: Number(level),
+      challengesCompleted: Number(challengesCompleted),
+      currentXp: Number(currentXp)
+    }
+  };
+};
