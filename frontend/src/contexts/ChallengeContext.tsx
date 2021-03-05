@@ -2,6 +2,7 @@ import { createContext, ReactNode, useEffect, useState } from 'react';
 import Cookies from 'js-cookie'
 
 import challenges from '../../challenges.json';
+import { LevelUpModal } from '../components/LevelUpModal';
 
 interface Challenge {
   type: 'body' | 'eye';
@@ -14,6 +15,7 @@ interface ChallengesContextData {
   currentXp: number;
   challengesCompleted: number;
   activeChallenge: Challenge;
+  setOpenModalLevelUp: (isOpened: boolean)=> void;
   resetChallenge: () => void;
   levelUp: () => void;
   completedChallenge: () => void;
@@ -35,6 +37,7 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
   const [challengesCompleted, setChallengesCompleted] = useState(rest.challengesCompleted ?? 0);
 
   const [activeChallenge, setActiveChallenge] = useState(null);
+  const [openModalLevelUp, setOpenModalLevelUp] = useState(false);
 
   const xpToNextLevel = Math.pow((level + 1) * 4, 2);
 
@@ -50,6 +53,8 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
 
   function levelUp() {
     setLevel(level + 1);
+    new Audio('/levelUp.mp3').play()
+    setOpenModalLevelUp(true)
   }
 
   function startNewChallenge() {
@@ -100,8 +105,10 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
         resetChallenge,
         levelUp,
         completedChallenge,
+        setOpenModalLevelUp
       }}
     >
+      { openModalLevelUp && <LevelUpModal /> }
       {children}
     </ChallengesContext.Provider>
   );
